@@ -43,9 +43,13 @@
             <td>{{ forloop.counter }}</td>
             <td>{{ todo.title }}</td>
             <td>{{ todo.due_date }}</td>
-            <td>{{ todo.done }}</td>
+            <td>{{ todo.done|yesno:"Yes,No" }}</td>
             <td>{{ todo.description }}</td>
           </tr>
+          {% empty %}
+          <tr>
+            <td colspan="5">Sorry no TODO tasks are available yet.</td>
+          </tr>  
           {% endfor %}
         </tbody>
       </table>
