@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block main_content %}
+  <div class="card text-center">
+    <div class="card-header">
+      Due {{ todo.due_date }}
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">{{ todo.title }}</h5>
+      <p class="card-text">{{ todo.description }}</p>
+      <a href="#" class="btn btn-primary">Go somewhere</a>
+    </div>
+    <div class="card-footer text-muted">
+      {% if not todo.done %}Not {% endif %}done
+    </div>
+  </div>
+{% endblock %}
