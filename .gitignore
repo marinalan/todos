@@ -1,11 +1,11 @@
-thisfish.log
+*.log
+*.pot
 django-shapeload
 ~*
 logs
 ._*
 build
 pip-log.txt
-static
 ENV
 env
 *.pyc
@@ -13,6 +13,7 @@ media/cache
 media/CACHE
 *.swp
 settings_local.py
+local_settings.py
 templates/temptest.html
 *~
 .idea
@@ -24,3 +25,8 @@ thisfish-fcgi.bash
 *.orig
 *.xlsx
 *.xls
+*.sqlite3
+*.egg
+.ipynb_checkpoints
+MANIFEST
+*.egg-info
