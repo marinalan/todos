@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% block title %}{{ todo.title }} - {{ block.super }}{% endblock %}
 {% block main_content %}
   <div class="card text-center">
     <div class="card-header">

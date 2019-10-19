@@ -1,9 +1,10 @@
 from datetime import datetime
 from django.template import loader
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, Http404
 
 from .models import Todo
+from .forms import TodoForm
 
 def index(request):
     todos = Todo.objects.all()
@@ -31,3 +32,12 @@ def todo_detail(request, todo_id):
   #   return render(request, 'main/todo_detail.html', context=context)
   # except Todo.DoesNotExist:
   #   raise Http404("Todo with id: {} does not exist.".format(todo_id))
+
+def todo_create(request):
+    if request.method == 'POST':
+        form = TodoForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('index')
+        return render(request, 'main/todo.html', {'form': form})
+    return render(request, 'main/todo.html', {'form': TodoForm()})
