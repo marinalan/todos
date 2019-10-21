@@ -1,9 +1,12 @@
 from datetime import datetime
 
 from django.contrib import messages
-from django.template import loader
+from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponse, Http404
+from django.urls import reverse_lazy
+from django.views.generic import CreateView, UpdateView
+
+#from django.http import HttpResponse, Http404
 
 from .models import Todo
 from .forms import TodoForm
@@ -35,24 +38,17 @@ def todo_detail(request, todo_id):
   # except Todo.DoesNotExist:
   #   raise Http404("Todo with id: {} does not exist.".format(todo_id))
 
-def todo_create(request):
-    if request.method == 'POST':
-        form = TodoForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, "The todo was created successfully.")
-            return redirect('index')
-        return render(request, 'main/todo.html', {'form': form})
-    return render(request, 'main/todo.html', {'form': TodoForm()})
+class TodoCreateView(SuccessMessageMixin, CreateView):
+    model = Todo
+    form_class = TodoForm
+    template_name = 'main/todo.html'
+    success_url = reverse_lazy('index')
+    success_message = 'Todo has been created successfully.'
 
-def todo_update(request, todo_id):
-    todo = get_object_or_404(Todo, pk=todo_id)
-    if request.method == 'POST':
-        form = TodoForm(request.POST, instance=todo)
-        if form.is_valid():
-            form.save()
-            messages.success(request, "The todo was updated successfully.")
-            return redirect('index')
-        return render(request, 'main/todo.html', {'form': form})
-    return render(request, 'main/todo.html', {'form': TodoForm(instance=todo)})
 
+class TodoUpdateView(SuccessMessageMixin, UpdateView):
+    model = Todo
+    form_class = TodoForm
+    template_name = 'main/todo.html'
+    success_url = reverse_lazy('index')
+    success_message = 'Todo has been updated successfully.'

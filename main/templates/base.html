@@ -15,8 +15,6 @@
       <nav class="nav my-5">
           <a class="nav-link active" href="{% url 'index' %}">Home</a>
           <a class="nav-link" href="{% url 'todo_create' %}">Create a new Todo</a>
-          <a class="nav-link" href="#">Contact</a>
-          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Logout</a>
       </nav>
       {% if messages %}
           {% include "main/partials/messages.html" %}
