@@ -12,20 +12,15 @@
   </head>
   <body>
     <div class="container">
-      <ul class="nav">
-        <li class="nav-item">
-          <a class="nav-link active" href="#">Active</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-        </li>
-      </ul>
+      <nav class="nav my-5">
+          <a class="nav-link active" href="{% url 'index' %}">Home</a>
+          <a class="nav-link" href="{% url 'todo_create' %}">Create a new Todo</a>
+          <a class="nav-link" href="#">Contact</a>
+          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Logout</a>
+      </nav>
+      {% if messages %}
+          {% include "main/partials/messages.html" %}
+      {% endif %}    
       {% block main_content %}{% endblock %}
     </div>
     <script src="{% static 'js/jquery-3.3.1.min.js' %}" charset="utf-8"></script>

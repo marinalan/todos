@@ -3,7 +3,7 @@
 {% block title %}Create a new todo {{ block.super }}{% endblock %}
 
 {% block main_content %}
-  <form class="" action="{% url 'todo_create' %}" method="POST">
+  <form class="" action="" method="POST">
 
     {% csrf_token %}
     {{ form|crispy }}
