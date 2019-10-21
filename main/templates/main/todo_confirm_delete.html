@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Deleteing '{{ todo.title }}' - {{ block.super }}{% endblock %}
+{% block main_content %}
+<h1>Deleting <em>{{ todo.title }}</em></h1>
+<form method="post">{% csrf_token %}
+    Are you sure you want to delete "{{ object }}" ?
+    <input class="btn btn-danger" type="submit" value="Submit" />
+</form>
+{% endblock %}

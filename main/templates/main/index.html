@@ -23,7 +23,10 @@
         <td>{{ todo.due_date }}</td>
         <td>{{ todo.done|yesno:"Yes,No" }}</td>
         <td>{{ todo.description|truncatechars:50 }}</td>
-        <td><a class="btn btn-info" href="{% url 'todo_detail' todo_id=todo.pk %}">Show</a></td>
+        <td>
+            <a class="btn btn-info" href="{% url 'todo_detail' pk=todo.pk %}">Show</a>
+            <a class="btn btn-danger" href="{% url 'todo_delete' pk=todo.pk %}">Delete</a>
+        </td>
       </tr>
       {% empty %}
       <tr>

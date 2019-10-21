@@ -2,41 +2,32 @@ from datetime import datetime
 
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
+from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, UpdateView
+from django.views.generic import (
+    CreateView, UpdateView, ListView, DetailView, DeleteView, View
+)
 
 #from django.http import HttpResponse, Http404
 
 from .models import Todo
 from .forms import TodoForm
 
-def index(request):
-    todos = Todo.objects.all()
-    context = {
-        'todos': todos,    
-        'today': datetime.now(),
-        'app_name': "Super Todos"
-    }
-    return render(request, 'main/index.html', context=context)
-    #template = loader.get_template('main/index.html')
-    #return HttpResponse(template.render(context, request))
+class IndexView(ListView):
+    queryset = Todo.objects.all()
+    template_name = 'main/index.html'
+    context_object_name = 'todos'
 
-def todo_detail(request, todo_id):
-  todo = get_object_or_404(Todo, pk=todo_id)
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx['today'] =  datetime.now()
+        ctx['app_name'] = "Super Todos"
+        return ctx
 
-  context = {
-    'todo': todo
-  }
-  return render(request, 'main/todo_detail.html', context=context)
-  # try:
-  #   todo = Todo.objects.get(pk=todo_id)
-  #   context = {
-  #     'todo': todo
-  #   }
-  #   return render(request, 'main/todo_detail.html', context=context)
-  # except Todo.DoesNotExist:
-  #   raise Http404("Todo with id: {} does not exist.".format(todo_id))
+
+class TodoDetailsView(DetailView):
+    model = Todo
 
 class TodoCreateView(SuccessMessageMixin, CreateView):
     model = Todo
@@ -52,3 +43,12 @@ class TodoUpdateView(SuccessMessageMixin, UpdateView):
     template_name = 'main/todo.html'
     success_url = reverse_lazy('index')
     success_message = 'Todo has been updated successfully.'
+
+class TodoDeleteView(DeleteView):
+    model = Todo
+    success_url = reverse_lazy('index')
+
+class TodoJsonView(View):
+    def get(self, request, *args, **kwargs):
+        todos = Todo.objects.filter(done=True).values()
+        return JsonResponse({'todos': list(todos)})
