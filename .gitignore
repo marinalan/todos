@@ -25,7 +25,7 @@ thisfish-fcgi.bash
 *.orig
 *.xlsx
 *.xls
-*.sqlite3
+#*.sqlite3
 *.egg
 .ipynb_checkpoints
 MANIFEST
