@@ -1,5 +1,7 @@
 from datetime import date
 from django import forms
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 
 from .models import Todo
 
@@ -38,3 +40,12 @@ class TodoForm(forms.ModelForm):
         if due_date < date.today():
             raise forms.ValidationError('The due date can not be in the past.')
         return due_date
+
+class SignupForm(UserCreationForm):
+    first_name = forms.CharField(max_length=100, required=True)
+    last_name = forms.CharField(max_length=100, required=True)
+    email = forms.EmailField(max_length=255, help_text='eg. name@example.com')
+
+    class Meta:
+        model = User
+        fields = ('first_name','last_name','username','password1','password2','email')
