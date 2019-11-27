@@ -1,3 +1,11 @@
-table#todos-list tr td:nth-child(3) {
+table#todos-list tr td:nth-child(3),
+table#todos-list tr td:nth-child(4) {
   white-space: nowrap;
+}
+table#todos-list tr td.action-col {
+  min-width: 160px;
+}
+ul.navbar-nav li {
+  display: inline-flex;
+  margin-left: 15px;
 }

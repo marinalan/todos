@@ -2,7 +2,6 @@
 {% block title %}Home - {{ block.super }}{% endblock %}
 
 {% block main_content %}
-  <h1>{{ app_name }}</h1>
   <p class="text-right">Today is {{ today }}</p>
   <table class="table table-striped table-dark table-hover" id="todos-list">
     <thead>
@@ -10,8 +9,7 @@
         <th>#</th>
         <th scope="col">Title</th>
         <th scope="col">Due Date</th>
-        <th scope="col">Done</th>
-        <th scope="col">Description</th>
+        <th scope="col">State</th>
         <th>Action</th>
       </tr>
     </thead>
@@ -21,11 +19,14 @@
         <td>{{ forloop.counter }}</td>
         <td><a href="{% url 'todo_update' pk=todo.pk %}">{{ todo.title }}</a></td>
         <td>{{ todo.due_date }}</td>
-        <td>{{ todo.done|yesno:"Yes,No" }}</td>
-        <td>{{ todo.description|truncatechars:50 }}</td>
-        <td>
-            <a class="btn btn-info" href="{% url 'todo_detail' pk=todo.pk %}">Show</a>
-            <a class="btn btn-danger" href="{% url 'todo_delete' pk=todo.pk %}">Delete</a>
+        <td>{{ todo.get_state_display }}</td>
+        <td class="action-col">
+          <a class="btn btn-outline-info btn-sm" 
+             href="{% url 'todo_detail' pk=todo.pk %}" title="Show"><i class="fas fa-eye"></i></a>
+          <a class="btn btn-outline-secondary btn-sm" 
+             href="{% url 'todo_update' pk=todo.pk %}" title="Edit"><i class="fas fa-pencil-alt"></i></a>
+          <a class="btn btn-outline-danger btn-sm" 
+             href="{% url 'todo_delete' pk=todo.pk %}" title="Delete"><i class="fas fa-trash-alt"></i></a>
         </td>
       </tr>
       {% empty %}
